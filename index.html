@@ -4,56 +4,86 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MD. AL AMIN SOHAG | Salsabilah Amin Empires</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; text-align: center; background-color: #f8f9fa; color: #212529; margin: 0; padding: 0; }
-        header { background: linear-gradient(to right, #b21f1f, #1a2a6c); color: white; padding: 60px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        h1 { margin: 0; font-size: 2.2em; text-transform: uppercase; letter-spacing: 2px; }
-        .subtitle { font-size: 1.1em; margin-top: 10px; opacity: 0.9; font-weight: 300; }
-        .container { padding: 40px 20px; max-width: 800px; margin: auto; }
-        .card { background: white; border-radius: 12px; padding: 30px; margin-bottom: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border-top: 5px solid #1a2a6c; }
-        h2 { color: #1a2a6c; margin-top: 0; font-size: 1.6em; }
-        p { line-height: 1.6; color: #4b5563; }
-        .btn-group { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
-        .btn { display: block; padding: 15px; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 1em; transition: 0.3s; }
-        .btn-whatsapp { background: #25D366; }
-        .btn-facebook { background: #1877F2; } /* ফেসবুকের নীল রঙ */
-        .btn-linkedin { background: #0077B5; }
-        .btn-electronics { background: #e67e22; }
-        .btn-google { background: #4285F4; }
-        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
-        footer { padding: 30px; font-size: 0.9em; color: #6b7280; background: #fff; border-top: 1px solid #eee; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; text-align: center; background-color: #f4f7f6; color: #1a1a1a; margin: 0; padding: 0; }
+        header { background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); color: white; padding: 50px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .profile-container { display: flex; justify-content: center; align-items: center; gap: 25px; margin-bottom: 20px; flex-wrap: wrap; }
+        .profile-img { width: 140px; height: 140px; border-radius: 50%; border: 4px solid #fff; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .logo-main { width: 180px; margin: 20px auto; display: block; filter: drop-shadow(0 2px 5px rgba(255,255,255,0.2)); }
+        
+        h1 { margin: 10px 0; font-size: 2.2em; text-transform: uppercase; letter-spacing: 1px; }
+        .subtitle { font-size: 1.1em; color: #bdc3c7; margin-bottom: 20px; }
+
+        .container { padding: 30px 15px; max-width: 850px; margin: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
+
+        .card { background: white; border-radius: 15px; padding: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); border-top: 4px solid #1e3c72; text-align: left; }
+        .book-cover { width: 100%; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); margin-bottom: 15px; }
+        
+        h2 { color: #1e3c72; font-size: 1.4em; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 0; }
+        .chairman-tag { background: #fff5e6; color: #d35400; padding: 8px; border-radius: 5px; font-weight: bold; display: block; margin: 10px 0; border-left: 4px solid #e67e22; }
+
+        .btn-group { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+        .btn { display: block; padding: 12px; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; text-align: center; transition: 0.3s; font-size: 0.9em; }
+        
+        .btn-wa { background: #25D366; }
+        .btn-goodreads { background: #f4f1ea; color: #382110; border: 1px solid #d6d0c4; }
+        .btn-store { background: #e67e22; }
+        .btn-social { background: #2c3e50; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+
+        footer { background: #0f2027; color: #bdc3c7; padding: 40px 20px; margin-top: 40px; font-size: 0.9em; }
     </style>
 </head>
 <body>
 
 <header>
+    <div class="profile-container">
+        <img src="salsabilah.jpg" alt="Salsabilah Amin" class="profile-img">
+        <img src="sohag.png" alt="MD. AL AMIN SOHAG" class="profile-img">
+    </div>
+    <img src="logo.png" alt="Salsabilah Amin Electronics Logo" class="logo-main">
     <h1>MD. AL AMIN SOHAG</h1>
     <div class="subtitle">Visionary Entrepreneur • International Author • Tech Strategist</div>
 </header>
 
 <div class="container">
+    
     <div class="card">
-        <h2>Salsabilah Amin Empires</h2>
-        <p>Managing Director of <strong>Salsabilah Amin Electronics Limited</strong>. Bridging the gap between technology and literature.</p>
-        
+        <h2>📚 Literary Masterpiece</h2>
+        <img src="cover.jpg" alt="The Empress's Legacy Book Cover" class="book-cover">
+        <p><strong>The Empress's Legacy:</strong> A Symphony of Faith and Grit.</p>
         <div class="btn-group">
-            <a href="https://wa.me/8801711995940" target="_blank" class="btn btn-whatsapp">💬 Contact via WhatsApp</a>
-            
-            <a href="https://www.facebook.com/alamin.sohag.79/" target="_blank" class="btn btn-facebook">👥 Follow on Facebook</a>
-            
-            <a href="https://www.linkedin.com/in/md-al-amin-sohag" target="_blank" class="btn btn-linkedin">🔗 Connect on LinkedIn</a>
-            
-            <a href="https://salsabilahelectronics.com" class="btn btn-electronics">⚡ SR Electronics Online Store</a>
-            
-            <a href="https://maps.app.goo.gl/ChIJdWZeNAC1_jkRazxQPZUECUg" target="_blank" class="btn btn-google">📍 Find us on Google Maps</a>
+            <a href="https://www.goodreads.com/author/show/54316654.MD_AL_AMIN_SOHAG" target="_blank" class="btn btn-goodreads">⭐ Goodreads Reviews</a>
+            <a href="https://salsabilah.com" class="btn btn-social">Author Portfolio</a>
         </div>
     </div>
+
+    <div class="card">
+        <h2>⚡ Enterprise & Leadership</h2>
+        <div class="chairman-tag">Chairman: Nahian Sultana Jui</div>
+        <p>MD. AL AMIN SOHAG leads <strong>Salsabilah Amin Electronics Limited</strong> & <strong>SR Electronics Park</strong> with a mission of global excellence.</p>
+        <div class="btn-group">
+            <a href="https://wa.me/8801711995940" target="_blank" class="btn btn-wa">💬 Business WhatsApp</a>
+            <a href="https://salsabilahelectronics.com" class="btn btn-store">Visit Electronics Store</a>
+        </div>
+    </div>
+
+    <div class="card" style="grid-column: 1 / -1;">
+        <h2>🔗 Global Connectivity</h2>
+        <div class="btn-group" style="flex-direction: row; flex-wrap: wrap;">
+            <a href="https://www.linkedin.com/in/md-al-amin-sohag" target="_blank" class="btn btn-social" style="flex: 1;">LinkedIn</a>
+            <a href="https://www.facebook.com/alamin.sohag.79/" target="_blank" class="btn btn-social" style="flex: 1;">Facebook</a>
+        </div>
+    </div>
+
 </div>
 
 <footer>
-    <p><strong>SR Electronics Park</strong><br>
+    <p><strong>Salsabilah Amin Empires</strong><br>
     Shah Super Market, Hat Boalia 7210<br>
-    WhatsApp: +880 1711-995940</p>
+    Master's of English Literature | Web Developer</p>
     <p>© 2026 MD. AL AMIN SOHAG. All Rights Reserved.</p>
 </footer>
 
