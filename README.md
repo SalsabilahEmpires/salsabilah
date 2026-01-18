@@ -1,35 +1,36 @@
-# SALSABILAH AMIN EMPIRES
-### A Symphony of Faith and Grit
+# SALSABILAH AMIN EMPIRES:
+## A Symphony of Faith and Grit
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/SalsabilahEmpires/SALSABILAH/main/cover.png" width="400" alt="Salsabilah Amin Empires Cover">
-</p>
+![Salsabilah Amin Empires Cover](cover.png) 
 
-## 🏛️ Strategic Architecture
-Welcome to the official repository of **Salsabilah Amin Empires**. This is the blueprint of a legacy built on **Trust, Integrity, and Excellence**.
 
 ---
 
-## 👥 Governing Body
-As seen on [salsabilah.com](https://salsabilah.com):
-* **NAHIAN SULTANA JUI** – *Chairman*
-* **MD. AL AMIN SOHAG** – *Managing Director*
+### 🏛️ The Visionary Blueprint
+Welcome to the strategic architecture of **The Salsabilah Amin Empires**. This mission is defined by the profound synergy of **Faith and Grit**.
+
+### 👤 Leadership & Governance
+* **Chairman:** NAHIAN SULTANA JUI
+* **Managing Director:** MD. AL AMIN SOHAG
 
 ---
 
-## 🚀 Vision & Operations
-This empire orchestrates a multi-dimensional approach to business and technology, integrating:
-1.  **Salsabilah Amin Electronics Limited**
-2.  **SR Electronics Park**
-3.  **Strategic Market Analytics**
-
-> "Building the future of infrastructure and global innovation with a symphony of faith and grit."
+### 🚀 Strategic Pillars
+1. **SR Electronics Park:** Leading the way in electronics retail.
+2. **Salsabilah Amin Electronics Limited:** The corporate and manufacturing foundation.
+3. **The Empires Research:** Bridging literature and data-driven market analysis.
 
 ---
 
-## 🌐 Official Channels
-* **Website:** [www.salsabilah.com](https://salsabilah.com)
-* **Location:** Bangladesh
+### 🛡️ Core Values
+* **Trust:** Our bond with the people.
+* **Integrity:** Ethical excellence in every step.
+* **Excellence:** Standards that define a legacy.
 
 ---
-© 2026 Salsabilah Amin Empires. All Rights Reserved.
+
+### 🌐 Contact & Presence
+* **Official Website:** [salsabilah.com](https://salsabilah.com)
+* **Status:** *Currently evolving under a grand vision.*
+
+> "Success is not just about numbers; it's **A Symphony of Faith and Grit**."
