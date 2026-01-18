@@ -1,88 +1,173 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salsabilah Electronics Limited | MD. AL AMIN SOHAG</title>
+    <title>SALSABILAH AMIN EMPIRES | MD. AL AMIN SOHAG</title>
     
-    <meta name="description" content="Official website of MD. AL AMIN SOHAG, Founder of Salsabilah Electronics Limited and SR Electronics Park.">
-    <meta name="keywords" content="MD. AL AMIN SOHAG, Salsabilah Electronics, SR Electronics Park, International Author">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        :root { --gold: #D4AF37; --dark: #0f172a; --white: #ffffff; }
-        body { margin: 0; background: var(--dark); color: var(--white); font-family: 'Segoe UI', Tahoma, sans-serif; }
-        
-        .header { text-align: center; padding: 50px 20px; border-bottom: 1px solid rgba(212, 175, 55, 0.2); }
-        .header h1 { color: var(--gold); font-size: 2.5rem; letter-spacing: 2px; }
-        
-        /* ছবি পূর্ণাঙ্গ দেখানোর জন্য কন্টেইনার */
-        .showcase { display: flex; justify-content: center; gap: 40px; padding: 50px 20px; flex-wrap: wrap; }
-        .profile-card { text-align: center; max-width: 400px; }
-        
-        .image-box { 
-            width: 100%; 
-            border: 5px solid var(--gold); 
-            border-radius: 20px; 
-            overflow: hidden; 
-            background: #1e293b;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        
-        .image-box img { 
-            width: 100%; 
-            height: auto; 
-            display: block; 
-            object-fit: contain; /* ছবি কাটবে না, সম্পূর্ণ দেখাবে */
-        }
-        
-        .name-tag { margin-top: 20px; font-size: 1.5rem; color: var(--gold); font-weight: bold; }
-        .sub-tag { color: #94a3b8; font-size: 1rem; margin-top: 5px; }
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "MD. AL AMIN SOHAG",
+      "url": "https://salsabilah.com",
+      "jobTitle": "Managing Director & International Author",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Salsabilah Amin Electronics Limited"
+      },
+      "sameAs": [
+        "https://linkedin.com/in/mdalaminsohagofficial",
+        "https://www.facebook.com/mdalaminsohag.official",
+        "https://www.facebook.com/salsabilahelectronics/",
+        "https://instagram.com/SalsabilahEmpires",
+        "https://goodreads.com/author/show/MD_AL_AMIN_SOHAG"
+      ]
+    }
+    </script>
 
-        .footer { text-align: center; padding: 40px; background: #000; color: #555; }
-        .admin-btn { 
-            display: inline-block; margin-top: 20px; padding: 10px 25px; 
-            border: 2px solid var(--gold); color: var(--gold); 
-            text-decoration: none; border-radius: 50px; transition: 0.3s; 
-        }
-        .admin-btn:hover { background: var(--gold); color: #000; }
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #D4AF37; --deep-black: #050505; --glass: rgba(255, 255, 255, 0.03); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--deep-black); color: #fff; font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
+        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); z-index: -1; }
+        
+        .hero { height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; }
+        .royal-logo { font-family: 'Cinzel', serif; font-size: clamp(1.5rem, 7vw, 3.5rem); color: var(--gold); letter-spacing: 12px; text-transform: uppercase; margin-bottom: 20px; }
+        .tagline { font-size: 0.8rem; letter-spacing: 6px; text-transform: uppercase; color: #888; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 10px; }
+
+        .legacy-gallery { padding: 60px 10%; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px; }
+        .legacy-card { text-align: center; border: 1px solid rgba(212, 175, 55, 0.15); background: var(--glass); padding: 15px; transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        .legacy-card:hover { border-color: var(--gold); transform: translateY(-10px); }
+        .legacy-card img { width: 100%; height: 480px; object-fit: cover; filter: grayscale(30%) contrast(110%); transition: 0.5s; }
+        .legacy-card:hover img { filter: grayscale(0%); }
+        .caption { font-family: 'Cinzel', serif; margin-top: 20px; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; font-size: 1.1rem; }
+
+        .narrative-section { padding: 100px 15%; text-align: center; }
+        .narrative-text { font-size: 1.2rem; line-height: 2.2; color: #bbb; font-weight: 300; font-style: italic; max-width: 900px; margin: 0 auto; }
+        .narrative-text b { color: var(--gold); font-weight: 600; font-style: normal; }
+
+        .strength-tribute { padding: 80px 12%; background: rgba(212, 175, 55, 0.02); text-align: center; border-top: 1px solid rgba(212, 175, 55, 0.1); }
+        .strength-quote { font-size: 1.1rem; line-height: 2; color: #ddd; max-width: 850px; margin: 0 auto; }
+
+        .google-appreciation { padding: 100px 20px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
+        .google-brand { font-size: 3.5rem; background: linear-gradient(to right, #4285F4, #EA4335, #FBBC05, #34A853); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 25px; }
+
+        .governance { padding: 80px 10%; display: flex; justify-content: space-around; flex-wrap: wrap; text-align: center; gap: 40px; }
+        .leader-box h4 { font-size: 0.65rem; letter-spacing: 5px; color: var(--gold); text-transform: uppercase; margin-bottom: 15px; }
+        .leader-box h2 { font-family: 'Cinzel', serif; font-size: 1.8rem; letter-spacing: 3px; }
+
+        .social-bar { padding: 40px; text-align: center; border-top: 1px solid rgba(212, 175, 55, 0.1); }
+        .social-link { color: var(--gold); text-decoration: none; margin: 0 15px; font-size: 1.6rem; transition: 0.4s; opacity: 0.6; display: inline-block; }
+        .social-link:hover { opacity: 1; transform: scale(1.2); }
+        .brand-label { font-size: 0.55rem; display: block; margin-top: 5px; letter-spacing: 1px; color: #888; text-transform: uppercase; }
+
+        .secret-gate { opacity: 0.05; cursor: default; position: fixed; bottom: 10px; right: 10px; font-size: 10px; color: #555; }
+
+        footer { padding: 80px 20px; text-align: center; font-size: 0.7rem; letter-spacing: 5px; color: #444; border-top: 1px solid rgba(212, 175, 55, 0.02); }
     </style>
 </head>
 <body>
 
-    <header class="header">
-        <h1>SALSABILAH ELECTRONICS LIMITED</h1>
-        <p>A Legacy of Excellence & Vision</p>
-    </header>
+    <section class="hero">
+        <p class="tagline">The Imperial Chronicle</p>
+        <h1 class="royal-logo">Salsabilah Amin Empires</h1>
+        <p class="tagline">International Author | Strategic Entrepreneur</p>
+    </section>
 
-    <div class="showcase">
-        <div class="profile-card">
-            <div class="image-box">
-                <img src="sohag.png" alt="MD. AL AMIN SOHAG">
-            </div>
-            <div class="name-tag">MD. AL AMIN SOHAG</div>
-            <div class="sub-tag">The Visionary Architect & Managing Director</div>
+    <section class="legacy-gallery">
+        <div class="legacy-card">
+            <img src="sohag.png" alt="MD. AL AMIN SOHAG">
+            <div class="caption">The Architect</div>
+            <p style="font-size: 0.7rem; letter-spacing: 3px; color: #777; margin-top: 5px;">MD. AL AMIN SOHAG</p>
         </div>
-
-        <div class="profile-card">
-            <div class="image-box">
-                <img src="salsabilah.jpg" alt="Salsabilah">
-            </div>
-            <div class="name-tag">Salsabilah Amin</div>
-            <div class="sub-tag">The Masterpiece & Inspiration</div>
+        <div class="legacy-card">
+            <img src="salsabilah.jpg" alt="Salsabilah Amin">
+            <div class="caption">The Masterpiece</div>
+            <p style="font-size: 0.7rem; letter-spacing: 3px; color: #777; margin-top: 5px;">SALSABILAH AMIN</p>
         </div>
-    </div>
+    </section>
 
-    <div style="text-align: center; padding: 20px;">
-        <p style="max-width: 800px; margin: 0 auto; color: #cbd5e1; line-height: 1.8;">
-            Visionary Entrepreneur, International Author, Master's of English Literature, and Founder of SR Electronics Park.
+    <section class="narrative-section">
+        <div class="narrative-text">
+            Crafted by the hands of an <b>International Author</b> and <b>Strategic Visionary</b>, the Salsabilah Amin Empires stands as a testament to intellectual sovereignty. 
+            The founder, <b>MD. AL AMIN SOHAG</b>, perceives every venture as a literary verse—structured with logic and inspired by faith. 
+            This portal is more than an interface; it is a discovery and a masterpiece dedicated to the legacy of <b>SALSABILAH AMIN</b>.
+        </div>
+    </section>
+
+    <section class="strength-tribute">
+        <div class="strength-quote">
+            "In the epoch of silence when the world stood still, there was one voice of unwavering courage. <b>NAHIAN SULTANA JUI</b> was the guardian of the flame. Her resilience is the silent engine of this sovereign journey."
+        </div>
+    </section>
+
+    <section class="google-appreciation">
+        <div class="google-brand"><i class="fab fa-google"></i></div>
+        <h3 style="font-family: 'Cinzel', serif; letter-spacing: 5px; margin-bottom: 25px;">A GLOBAL TRIBUTE</h3>
+        <p style="font-style: italic; color: #888; max-width: 800px; margin: 0 auto; line-height: 1.8;">
+            "We acknowledge <b>Google</b> as the digital witness to our evolution. Through its global architecture, the vision of <b>MD. AL AMIN SOHAG</b> finds its universal archive."
         </p>
-        <a href="admin.html" class="admin-btn">GO TO ADMIN PANEL</a>
+    </section>
+
+    <section class="governance">
+        <div class="leader-box">
+            <h4>Honorable Chairman</h4>
+            <h2>NAHIAN SULTANA JUI</h2>
+        </div>
+        <div class="leader-box">
+            <h4>Founder & Managing Director</h4>
+            <h2>MD. AL AMIN SOHAG</h2>
+        </div>
+    </section>
+
+    <div class="social-bar">
+        <a href="https://linkedin.com/in/mdalaminsohagofficial" class="social-link" target="_blank">
+            <i class="fab fa-linkedin-in"></i>
+            <span class="brand-label">LinkedIn</span>
+        </a>
+        <a href="https://www.facebook.com/mdalaminsohag.official" class="social-link" target="_blank">
+            <i class="fab fa-facebook-f"></i>
+            <span class="brand-label">Official</span>
+        </a>
+        <a href="https://www.facebook.com/salsabilahelectronics/" class="social-link" target="_blank">
+            <i class="fas fa-store"></i>
+            <span class="brand-label">Enterprise</span>
+        </a>
+        <a href="https://instagram.com/SalsabilahEmpires" class="social-link" target="_blank">
+            <i class="fab fa-instagram"></i>
+            <span class="brand-label">Instagram</span>
+        </a>
+        <a href="https://goodreads.com/author/show/MD_AL_AMIN_SOHAG" class="social-link" target="_blank">
+            <i class="fab fa-goodreads-g"></i>
+            <span class="brand-label">Goodreads</span>
+        </a>
+        <a href="https://github.com/sohagelectronics" class="social-link" target="_blank">
+            <i class="fab fa-github"></i>
+            <span class="brand-label">GitHub</span>
+        </a>
     </div>
 
-    <footer class="footer">
-        &copy; 2026 Salsabilah Electronics Limited. All Rights Reserved.
+    <div class="secret-gate" onclick="initAdmin()">§ Admin</div>
+
+    <footer>
+        <p>EST. 2026 | SALSABILAH AMIN EMPIRES LIMITED</p>
+        <p style="margin-top: 15px; color: var(--gold); letter-spacing: 5px;">ALHAMDULILLAH FOR EVERYTHING</p>
+        <p style="margin-top: 10px;">POWERED BY FAITH & GOOGLE INNOVATION</p>
     </footer>
 
+    <script>
+        function initAdmin() {
+            let pass = prompt("Enter Empire Key:");
+            if(pass === "sohag2026") {
+                alert("Access Granted. Redirecting to Secret Dashboard...");
+                window.location.href = "admin.html";
+            } else {
+                alert("Unauthorized Access.");
+            }
+        }
+    </script>
 </body>
 </html>
