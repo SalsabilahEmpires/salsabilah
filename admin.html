@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salsabilah ERP | A4 Invoice & Stock Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --sidebar: #0f172a; --primary: #D4AF37; --success: #10b981; --danger: #ef4444; --bg: #f8fafc; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg); display: flex; height: 100vh; }
+
+        /* Sidebar */
+        .sidebar { width: 250px; background: var(--sidebar); color: #fff; display: flex; flex-direction: column; }
+        .sidebar-header { padding: 25px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; }
+        .sidebar-header h2 { color: var(--primary); font-size: 1.1rem; letter-spacing: 2px; }
+        .nav-link { padding: 15px 25px; color: #94a3b8; text-decoration: none; display: flex; align-items: center; cursor: pointer; }
+        .nav-link:hover, .nav-link.active { background: #1e293b; color: var(--primary); border-left: 4px solid var(--primary); }
+        .nav-link i { margin-right: 15px; width: 20px; }
+
+        /* Main Content */
+        .main { flex: 1; overflow-y: auto; padding: 30px; }
+        .card { background: #fff; border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 25px; }
+        
+        .grid-inputs { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        label { font-size: 0.75rem; font-weight: 700; color: #64748b; margin-bottom: 5px; display: block; }
+        input, select { width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; outline: none; font-size: 0.9rem; }
+        textarea { width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; outline: none; font-size: 0.9rem; resize: vertical; }
+
+        .btn { padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; text-transform: uppercase; transition: 0.3s; margin-top: 15px; }
+        .btn-primary { background: var(--sidebar); color: var(--primary); border: 1px solid var(--primary); }
+        .btn-add-item { background: #2563eb; color: #fff; }
+
+        /* Product Table for Invoice */
+        #invoice-items-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        #invoice-items-table th, #invoice-items-table td { border: 1px solid #e2e8f0; padding: 10px; text-align: left; }
+        #invoice-items-table th { background: #f1f5f9; font-size: 0.8rem; }
+        #invoice-items-table .delete-item { color: var(--danger); cursor: pointer; }
+
+        /* Print Specific Styles for A4 Invoice */
+        @media print {
+            body * { visibility: hidden; }
+            #invoice-print-area, #invoice-print-area * { visibility: visible; }
+            #invoice-print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 210mm; /* A4 Width */
+                min-height: 297mm; /* A4 Height */
+                margin: 0;
+                padding: 20mm; /* Standard A4 margin */
+                font-family: 'Inter', sans-serif;
+                color: #000;
+                background: #fff;
+                box-shadow: none; /* Remove shadow for print */
+            }
+            #invoice-print-area .company-info,
+            #invoice-print-area .customer-info,
+            #invoice-print-area .invoice-details,
+            #invoice-print-area .items-table,
+            #invoice-print-area .total-section,
+            #invoice-print-area .signature-section {
+                visibility: visible;
+            }
+            #invoice-print-area h2, #invoice-print-area h3, #invoice-print-area p, #invoice-print-area table {
+                visibility: visible;
+            }
+
+            .sidebar, .card:not(#invoice-generation-card), .btn-add-item, .btn-primary, .delete-item {
+                display: none !important;
+            }
+            .main { padding: 0 !important; }
+
+            /* Invoice Specific Layout */
+            .invoice-header { text-align: center; margin-bottom: 20px; }
+            .invoice-header h2 { font-size: 1.8rem; color: var(--sidebar); margin-bottom: 5px; }
+            .invoice-header p { font-size: 0.9rem; color: #555; margin-bottom: 3px; }
+
+            .invoice-section { margin-bottom: 20px; border: 1px solid #eee; padding: 15px; border-radius: 8px; }
+            .invoice-section h3 { font-size: 1.1rem; color: var(--sidebar); margin-bottom: 10px; border-left: 3px solid var(--primary); padding-left: 8px; }
+            
+            .invoice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+            .items-table th, .items-table td { border: 1px solid #ddd; padding: 8px; font-size: 0.9rem; }
+            .items-table th { background: #f0f0f0; }
+
+            .total-section { text-align: right; margin-top: 20px; }
+            .total-section p { font-size: 1.1rem; font-weight: 700; margin-bottom: 5px; }
+            .signature-section { margin-top: 50px; display: flex; justify-content: space-between; font-size: 0.9rem; }
+            .signature-section div { width: 45%; border-top: 1px dashed #aaa; padding-top: 10px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header"><h2 style="color:var(--primary)">SALSABILAH</h2><p style="font-size: 0.7rem; color: #ccc;">ELECTRONICS LIMITED</p></div>
+        <nav style="margin-top: 20px;">
+            <div class="nav-link active"><i class="fas fa-file-invoice"></i> Generate Invoice</div>
+            <div class="nav-link"><i class="fas fa-boxes"></i> Inventory & Stock</div>
+            <div class="nav-link"><i class="fas fa-truck"></i> Suppliers & Purchase</div>
+            <div class="nav-link"><i class="fas fa-users"></i> EMI Clients</div>
+            <a href="index.html" class="nav-link"><i class="fas fa-power-off"></i> Logout</a>
+        </nav>
+    </aside>
+
+    <main class="main">
+        <div class="card" id="invoice-generation-card">
+            <h3><i class="fas fa-receipt"></i> নতুন ইনভয়েস তৈরি করুন</h3>
+            
+            <div class="grid-inputs" style="margin-bottom: 25px;">
+                <div><label>ইনভয়েস নম্বর</label><input type="text" id="invoice-no" value="INV-SALS-001" readonly></div>
+                <div><label>তারিখ</label><input type="date" id="invoice-date"></div>
+                <div><label>পেমেন্টের ধরণ</label>
+                    <select id="payment-type">
+                        <option value="cash">নগদ (Cash)</option>
+                        <option value="emi">কিস্তি (EMI)</option>
+                    </select>
+                </div>
+            </div>
+
+            <h4 style="margin-top: 25px; margin-bottom: 15px; color: var(--sidebar);"><i class="fas fa-user-tag"></i> কাস্টমারের তথ্য</h4>
+            <div class="grid-inputs">
+                <div><label>কাস্টমারের নাম</label><input type="text" id="customer-name"></div>
+                <div><label>ফোন নম্বর</label><input type="text" id="customer-phone"></div>
+                <div style="grid-column: span 2;"><label>ঠিকানা</label><textarea id="customer-address" rows="2"></textarea></div>
+            </div>
+
+            <h4 style="margin-top: 25px; margin-bottom: 15px; color: var(--sidebar);"><i class="fas fa-boxes"></i> পণ্যের বিবরণ</h4>
+            <div class="grid-inputs">
+                <div><label>পণ্যের নাম</label><input type="text" id="item-name"></div>
+                <div><label>পরিমাণ</label><input type="number" id="item-qty" value="1"></div>
+                <div><label>ইউনিট মূল্য (৳)</label><input type="number" id="item-price" placeholder="0.00"></div>
+                <button class="btn btn-add-item" onclick="addItem()">+ অ্যাড আইটেম</button>
+            </div>
+            
+            <table id="invoice-items-table">
+                <thead>
+                    <tr>
+                        <th>ক্রমিক</th>
+                        <th>পণ্যের বিবরণ</th>
+                        <th>পরিমাণ</th>
+                        <th>ইউনিট মূল্য (৳)</th>
+                        <th>মোট (৳)</th>
+                        <th>অ্যাকশন</th>
+                    </tr>
+                </thead>
+                <tbody id="invoice-items-body">
+                    </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4" style="text-align: right; font-weight: bold;">মোট বিল:</td>
+                        <td id="grand-total" style="font-weight: bold;">0.00 ৳</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <button class="btn btn-primary" onclick="generateAndPrintInvoice()" style="width: 100%; margin-top: 30px;">
+                <i class="fas fa-print"></i> ইনভয়েস তৈরি করুন ও প্রিন্ট করুন
+            </button>
+        </div>
+
+        <div id="invoice-print-area" style="display: none;">
+            <div class="invoice-header">
+                <h2 style="color:var(--sidebar);">SALSABILAH ELECTRONICS LIMITED</h2>
+                <p>দোকান নং: ৫০, মেইন রোড, সদর ঘাট, চট্টগ্রাম।</p>
+                <p>ফোন: ০১৭xxxxxxxx, ইমেইল: info@salsabilah.com</p>
+                <div style="border-top: 1px solid #ccc; margin: 15px 0;"></div>
+                <h3 style="color:var(--primary);">ট্যাক্স ইনভয়েস</h3>
+            </div>
+
+            <div class="invoice-section customer-info">
+                <div class="invoice-grid">
+                    <div>
+                        <h3>ক্রেতার বিবরণ:</h3>
+                        <p>নাম: <span id="print-customer-name"></span></p>
+                        <p>ফোন: <span id="print-customer-phone"></span></p>
+                        <p>ঠিকানা: <span id="print-customer-address"></span></p>
+                    </div>
+                    <div>
+                        <h3>ইনভয়েস বিবরণ:</h3>
+                        <p>ইনভয়েস নং: <span id="print-invoice-no"></span></p>
+                        <p>তারিখ: <span id="print-invoice-date"></span></p>
+                        <p>পেমেন্টের ধরণ: <span id="print-payment-type"></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="invoice-section items-table">
+                <h3>বিক্রিত পণ্যের তালিকা:</h3>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;">#</th>
+                            <th style="width: 50%;">পণ্যের বিবরণ</th>
+                            <th style="width: 15%;">পরিমাণ</th>
+                            <th style="width: 15%;">ইউনিট মূল্য</th>
+                            <th style="width: 15%;">মোট</th>
+                        </tr>
+                    </thead>
+                    <tbody id="print-invoice-items-body">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" style="text-align: right; font-weight: bold;">মোট বিল:</td>
+                            <td id="print-grand-total" style="font-weight: bold;"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" style="text-align: right; font-size: 0.9rem; padding-top: 10px;">
+                                (কথায়: <span id="amount-in-words"></span> টাকা মাত্র)
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="signature-section">
+                <div>
+                    <p>বিক্রেতার স্বাক্ষর</p>
+                </div>
+                <div>
+                    <p>ক্রেতার স্বাক্ষর</p>
+                </div>
+            </div>
+
+            <p style="text-align: center; margin-top: 30px; font-size: 0.8rem; color: #777;">
+                **দ্রষ্টব্য: কিস্তিতে পণ্য বিক্রির ক্ষেত্রে সকল শর্তাবলী প্রযোজ্য।**
+            </p>
+        </div>
+    </main>
+
+    <script>
+        let invoiceItems = [];
+        let itemCounter = 0;
+
+        window.onload = function() {
+            document.getElementById('invoice-date').valueAsDate = new Date();
+            document.getElementById('invoice-no').value = "INV-" + Date.now().toString().slice(-6);
+        };
+
+        function addItem() {
+            const name = document.getElementById('item-name').value;
+            const qty = parseInt(document.getElementById('item-qty').value);
+            const price = parseFloat(document.getElementById('item-price').value);
+
+            if (!name || !qty || !price) {
+                alert("পণ্যের বিবরণ, পরিমাণ ও মূল্য দিন!");
+                return;
+            }
+
+            itemCounter++;
+            const total = qty * price;
+            invoiceItems.push({ id: itemCounter, name, qty, price, total });
+            renderInvoiceItems();
+            clearItemFields();
+        }
+
+        function renderInvoiceItems() {
+            const body = document.getElementById('invoice-items-body');
+            body.innerHTML = '';
+            let grandTotal = 0;
+
+            invoiceItems.forEach(item => {
+                grandTotal += item.total;
+                body.innerHTML += `
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>${item.name}</td>
+                        <td>${item.qty}</td>
+                        <td>${item.price.toLocaleString()}</td>
+                        <td>${item.total.toLocaleString()}</td>
+                        <td><i class="fas fa-trash delete-item" onclick="deleteItem(${item.id})"></i></td>
+                    </tr>
+                `;
+            });
+            document.getElementById('grand-total').innerText = grandTotal.toLocaleString() + " ৳";
+        }
+
+        function deleteItem(id) {
+            invoiceItems = invoiceItems.filter(item => item.id !== id);
+            renderInvoiceItems();
+        }
+
+        function clearItemFields() {
+            document.getElementById('item-name').value = '';
+            document.getElementById('item-qty').value = '1';
+            document.getElementById('item-price').value = '';
+        }
+
+        function generateAndPrintInvoice() {
+            // Fill printable area with data
+            document.getElementById('print-customer-name').innerText = document.getElementById('customer-name').value;
+            document.getElementById('print-customer-phone').innerText = document.getElementById('customer-phone').value;
+            document.getElementById('print-customer-address').innerText = document.getElementById('customer-address').value;
+            document.getElementById('print-invoice-no').innerText = document.getElementById('invoice-no').value;
+            document.getElementById('print-invoice-date').innerText = document.getElementById('invoice-date').value;
+            document.getElementById('print-payment-type').innerText = document.getElementById('payment-type').options[document.getElementById('payment-type').selectedIndex].text;
+
+            const printBody = document.getElementById('print-invoice-items-body');
+            printBody.innerHTML = '';
+            let printGrandTotal = 0;
+
+            invoiceItems.forEach((item, index) => {
+                printGrandTotal += item.total;
+                printBody.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${item.name}</td>
+                        <td>${item.qty}</td>
+                        <td>${item.price.toLocaleString()}</td>
+                        <td>${item.total.toLocaleString()}</td>
+                    </tr>
+                `;
+            });
+            document.getElementById('print-grand-total').innerText = printGrandTotal.toLocaleString() + " ৳";
+            document.getElementById('amount-in-words').innerText = convertNumberToWords(printGrandTotal);
+
+            // Trigger print
+            window.print();
+        }
+
+        // Function to convert number to words (Simplified for Bengali, can be expanded)
+        function convertNumberToWords(amount) {
+            const units = ['', 'এক', 'দুই', 'তিন', 'চার', 'পাঁচ', 'ছয়', 'সাত', 'আট', 'নয়'];
+            const teens = ['দশ', 'এগারো', 'বারো', 'তেরো', 'চৌদ্দ', 'পনেরো', 'ষোলো', 'সতেরো', 'আঠারো', 'উনিশ'];
+            const tens = ['', '', 'বিশ', 'ত্রিশ', 'চল্লিশ', 'পঞ্চাশ', 'ষাট', 'সত্তর', 'আশি', 'নব্বই'];
+            const scales = ['', 'হাজার', 'লাখ', 'কোটি'];
+
+            function convertLessThanOneThousand(num) {
+                let s = '';
+                if (num >= 100) {
+                    s += units[Math.floor(num / 100)] + ' শত ';
+                    num %= 100;
+                }
+                if (num >= 20) {
+                    s += tens[Math.floor(num / 10)] + ' ';
+                    num %= 10;
+                }
+                if (num >= 10) {
+                    s += teens[num - 10] + ' ';
+                    num = 0;
+                }
+                if (num > 0) {
+                    s += units[num] + ' ';
+                }
+                return s;
+            }
+
+            if (amount === 0) return 'শূন্য';
+
+            let words = '';
+            let numStr = amount.toString();
+            let numParts = [];
+            
+            // Split into parts for Crore, Lakh, Thousand
+            const parts = [];
+            if (numStr.length > 7) { // Crore
+                parts.push(parseInt(numStr.slice(0, numStr.length - 7)));
+                numStr = numStr.slice(numStr.length - 7);
+            } else { parts.push(0); } // Placeholder for Crore
+
+            if (numStr.length > 5) { // Lakh
+                parts.push(parseInt(numStr.slice(0, numStr.length - 5)));
+                numStr = numStr.slice(numStr.length - 5);
+            } else { parts.push(0); }
+
+            if (numStr.length > 3) { // Thousand
+                parts.push(parseInt(numStr.slice(0, numStr.length - 3)));
+                numStr = numStr.slice(numStr.length - 3);
+            } else { parts.push(0); }
+
+            parts.push(parseInt(numStr)); // Remaining hundreds
+
+            // Reverse scales for processing
+            const reversedScales = ['', 'হাজার', 'লাখ', 'কোটি'].reverse();
+            const actualParts = [parts[0], parts[1], parts[2], parts[3]]; // Crore, Lakh, Thousand, Remaining
+
+            let tempWords = [];
+            if (actualParts[0] > 0) { // Crore
+                tempWords.push(convertLessThanOneThousand(actualParts[0]) + ' কোটি ');
+            }
+            if (actualParts[1] > 0) { // Lakh
+                tempWords.push(convertLessThanOneThousand(actualParts[1]) + ' লাখ ');
+            }
+            if (actualParts[2] > 0) { // Thousand
+                tempWords.push(convertLessThanOneThousand(actualParts[2]) + ' হাজার ');
+            }
+            if (actualParts[3] > 0) { // Remaining
+                tempWords.push(convertLessThanOneThousand(actualParts[3]));
+            }
+
+            words = tempWords.join('').trim();
+            return words.charAt(0).toUpperCase() + words.slice(1).toLowerCase();
+        }
+    </script>
+</body>
+</html>
