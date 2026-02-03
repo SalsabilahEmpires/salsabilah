@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Global Warranty Certificate - Salsabilah Empires</title>
+    <style>
+        @page { size: A4; margin: 0; }
+        body { font-family: 'Georgia', serif; color: #0a0a0a; margin: 0; padding: 0; background-color: #fff; }
+        .cert-container { width: 190mm; height: 277mm; border: 12px double #002366; margin: 10mm auto; padding: 40px; position: relative; box-sizing: border-box; }
+        .header { text-align: center; border-bottom: 2px solid #002366; padding-bottom: 20px; }
+        .header h1 { font-size: 34pt; margin: 0; text-transform: uppercase; letter-spacing: 3px; }
+        .header p { font-size: 11pt; margin: 5px 0; font-weight: bold; color: #444; }
+        .content { margin-top: 50px; font-size: 15pt; line-height: 2; }
+        .footer { position: absolute; bottom: 70px; width: 85%; text-align: right; }
+        .footer strong { font-size: 16pt; display: block; margin-top: 10px; }
+        .stamp { position: absolute; bottom: 60px; left: 60px; opacity: 0.1; transform: rotate(-15deg); font-size: 50pt; font-weight: bold; color: #002366; }
+    </style>
+</head>
+<body onload="window.print()">
+    <div class="cert-container">
+        <div class="stamp">AUTHENTIC</div>
+        <div class="header">
+            <h1>Certificate of Warranty</h1>
+            <p>SALSABILAH AMIN EMPIRES LTD.</p>
+            <p>UK REGISTERED COMPANY NO: 09814720 | EST. NOV 2024</p>
+        </div>
+        <div class="content">
+            <p>This document officially certifies the product warranty for:</p>
+            <p><strong>Customer Name:</strong> [DYNAMIC_NAME]</p>
+            <p><strong>Product Model:</strong> [DYNAMIC_MODEL]</p>
+            <p><strong>Validation Date:</strong> [DYNAMIC_DATE]</p>
+            <p><strong>Expiry Date:</strong> [DYNAMIC_EXPIRY]</p>
+            <p><strong>Authorized Outlet:</strong> SR Electronics Park, Bangladesh</p>
+        </div>
+        <div class="footer">
+            <hr style="border: 0.5px solid #000; width: 250px; margin-left: auto;">
+            <strong>MD. AL AMIN SOHAG</strong>
+            Founder & Managing Director
+        </div>
+    </div>
+</body>
+</html>
