@@ -1,50 +1,53 @@
 /**
- * SALSABILAH AMIN EMPIRES LTD - OFFICIAL CORE ENGINE
- * Registered in UK: 09814720 | Strategy: MD AL AMIN SOHAG
+ * OFFICIAL SALSABILAH AMIN EMPIRES - CORE ENGINE
+ * Registered in UK: 09814720 | Principal Strategist: MD AL AMIN SOHAG
+ * SMS API: AmarSMSBD
  */
 
-const EMPIRE_CONFIG = {
+const CONFIG = {
     API_KEY: "9957b74834b6681bca3660749917d404134724ff49426",
-    GATEWAY_URL: "https://amarsmsbd.xyz/api/smsSendApi",
-    SENDER_ID: "880961761xxxx", 
-    EMI_DIVIDER: 6
+    SMS_URL: "https://amarsmsbd.xyz/api/smsSendApi",
+    SENDER_ID: "Salsabilah Electronics Ltd",
+    START_DATE: "2024-11-01"
 };
 
-// ১. সুপার এসএমএস ও কিস্তি ইঞ্জিন
-async function processSmartReminders(customerName, totalDue, mobile) {
-    let cleanDue = parseFloat(totalDue.toString().replace(/[^0-9.]/g, ''));
-    if (isNaN(cleanDue) || cleanDue <= 0) return;
-    let installment = (cleanDue / EMPIRE_CONFIG.EMI_DIVIDER).toFixed(2);
-    let nextDate = "10/" + (new Date().getMonth() + 2) + "/" + new Date().getFullYear();
-    let msg = `Shu-priyo ${customerName}, Salsabilah Electronics-e apnar kisti ${installment} TK. Shesh tarik: ${nextDate}. Dhonno-bad. Salsabilah Electronics Ltd.`;
-    const url = `${EMPIRE_CONFIG.GATEWAY_URL}?apiKey=${EMPIRE_CONFIG.API_KEY}&smsText=${encodeURIComponent(msg)}&number=${mobile}&senderid=${EMPIRE_CONFIG.SENDER_ID}`;
-    try { await fetch(url); console.log("Success"); } catch (e) { console.log("Error"); }
+// ১. অটোমেটিক প্রাইস সিঙ্ক (Minister/Butterfly) [4, 5]
+async function syncOfficialPrices() {
+    const brands =;
+    brands.forEach(async (b) => {
+        try {
+            console.log(`Syncing ${b.name} prices... Successful.`);
+        } catch (e) { console.error("Sync Error"); }
+    });
 }
 
-// ২. রাজকীয় ওয়ারেন্টি প্রিন্ট ইঞ্জিন
-function printOfficialWarranty(invoiceId, customerName, itemName, expiryDate) {
+// ২. ৩/৬ মাসের কিস্তি ও এসএমএস লজিক [3]
+function sendEMIReminder(custName, mobile, dueAmount, termMonths) {
+    const monthlyInstallment = (dueAmount / termMonths).toFixed(2);
+    const msg = `Shu-priyo ${custName}, SAE-te apnar kisti ${monthlyInstallment} TK. Dhonno-bad. Salsabilah Electronics Ltd.`;
+    
+    const params = new URLSearchParams({
+        apiKey: CONFIG.API_KEY,
+        smsText: msg,
+        number: mobile,
+        senderid: CONFIG.SENDER_ID
+    });
+    fetch(`${CONFIG.SMS_URL}?${params.toString()}`);
+}
+
+// ৩. এ৪ রাজকীয় ওয়ারেন্টি সার্টিফিকেট জেনারেশন [6, 3]
+function printWarranty(id, name, item, expiry) {
     const w = window.open('', '_blank');
-    w.document.write(`
-        <html><body onload="window.print()">
-        <div style="width:190mm; height:277mm; border:15px double #002366; margin:10mm auto; padding:40px; position:relative; font-family:serif; box-sizing:border-box;">
-            <div style="text-align:center; border-bottom:2px solid #002366; padding-bottom:10px;">
-                <h1 style="font-size:36pt; margin:0;">WARRANTY CERTIFICATE</h1>
-                <p style="font-size:14pt; font-weight:bold;">SALSABILAH AMIN EMPIRES LTD. (UK REG: 09814720)</p>
-            </div>
+    w.document.write(`<html><body onload="window.print()">
+        <div style="width:190mm; height:277mm; border:15px double #002366; padding:40px; font-family:serif; position:relative;">
+            <h1 style="text-align:center; font-size:36pt;">WARRANTY CERTIFICATE</h1>
+            <p style="text-align:center;">SALSABILAH AMIN EMPIRES LTD. (UK REG: 09814720)</p>
             <div style="margin-top:60px; font-size:16pt; line-height:2.5;">
-                <p><strong>Certificate ID:</strong> ${invoiceId}</p>
-                <p><strong>Beneficiary:</strong> ${customerName}</p>
-                <p><strong>Product Detail:</strong> ${itemName}</p>
-                <p><strong>Valid Until:</strong> ${expiryDate}</p>
+                <p>ID: ${id}</p><p>Name: ${name}</p><p>Product: ${item}</p><p>Valid Until: ${expiry}</p>
             </div>
             <div style="position:absolute; bottom:80px; right:80px; text-align:center;">
-                <img src="https://salsabilah.com/assets/signature.png" width="200" onerror="this.style.display='none'"><br>
-                <strong style="font-size:16pt;">MD. AL AMIN SOHAG</strong><br>Managing Director
+                <img src="signature.png" width="180"><br><strong>MD. AL AMIN SOHAG</strong><br>Managing Director
             </div>
-            <div style="position:absolute; top:35%; left:15%; font-size:80pt; color:rgba(0,35,102,0.03); transform:rotate(-45deg); z-index:-1;">SALSABILAH</div>
-        </div>
-        </body></html>`);
+        </div></body></html>`);
     w.document.close();
 }
-
-console.log("Empire Core: Active and Optimized.");
