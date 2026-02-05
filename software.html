@@ -2,72 +2,73 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <title>SAE & SR | Smart ERP System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAE & SR | Professional ERP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --min-red: #ed1c24; --bf-blue: #004b91; --gold: #D4AF37; }
-        * { box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #000b18; color: #fff; margin: 0; }
+        :root { --min-red: #ed1c24; --bf-blue: #004b91; --gold: #D4AF37; --dark: #000810; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--dark); color: #fff; margin: 0; }
         
-        /* UI Design */
+        /* Dashboard UI */
         .no-print { padding: 20px; max-width: 1200px; margin: auto; }
-        .card { background: #00162d; border-radius: 12px; padding: 25px; border: 1px solid rgba(212,175,55,0.2); margin-bottom: 20px; }
-        h2, h3 { color: var(--gold); border-bottom: 1px solid rgba(212,175,55,0.1); padding-bottom: 10px; }
-        select, input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 6px; border: 1px solid #1e293b; background: #000; color: #fff; font-size: 16px; }
-        .btn-group { display: flex; gap: 10px; }
-        .btn { flex: 1; padding: 15px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .card { background: #001220; border-radius: 15px; padding: 25px; border: 1px solid rgba(212,175,55,0.2); margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        h2 { color: var(--gold); border-bottom: 2px solid var(--gold); padding-bottom: 10px; display: inline-block; }
+        select, input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #1e293b; background: #000; color: #fff; font-size: 16px; }
+        .btn { padding: 15px 30px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; margin-top: 10px; width: 100%; }
         
-        /* A4 Invoice Layout */
+        /* A4 Invoice Setup */
         .invoice-container { 
-            width: 210mm; min-height: 297mm; background: #fff; color: #000; margin: 20px auto; 
-            box-shadow: 0 0 20px rgba(0,0,0,0.5); display: none; padding: 20mm; position: relative;
+            width: 210mm; min-height: 297mm; background: #fff; color: #000; margin: 0 auto; 
+            padding: 20mm; position: relative; display: none; flex-direction: column;
         }
         @media print {
             .no-print { display: none; }
-            .invoice-container { display: block !important; margin: 0; box-shadow: none; width: 100%; }
+            .invoice-container { display: flex !important; margin: 0; width: 100%; height: 100%; }
             body { background: #fff; }
         }
 
-        .inv-header { display: flex; justify-content: space-between; border-bottom: 2px solid #eee; padding-bottom: 20px; margin-bottom: 30px; }
-        .brand-title { font-size: 32px; font-weight: 900; margin: 0; }
-        .company-details { text-align: right; font-size: 13px; line-height: 1.6; }
+        .inv-header { display: flex; justify-content: space-between; border-bottom: 3px solid #eee; padding-bottom: 20px; margin-bottom: 30px; }
+        .brand-name { font-size: 35px; font-weight: 900; margin: 0; }
+        .company-meta { text-align: right; font-size: 13px; line-height: 1.6; }
         
         table { width: 100%; border-collapse: collapse; margin-top: 30px; }
-        th { background: #f8f9fa; padding: 12px; border-bottom: 2px solid #ddd; text-align: left; }
-        td { padding: 12px; border-bottom: 1px solid #eee; }
+        th { background: #f8f9fa; padding: 15px; border-bottom: 2px solid #ddd; text-align: left; }
+        td { padding: 15px; border-bottom: 1px solid #eee; font-size: 14px; }
         
-        .inv-footer { margin-top: auto; padding-top: 50px; text-align: center; border-top: 1px solid #eee; }
-        .dev-credit { font-size: 11px; color: #777; margin-top: 10px; border-top: 1px dashed #ccc; padding-top: 5px; }
+        .inv-footer { margin-top: auto; padding-top: 50px; text-align: center; border-top: 2px solid #eee; }
+        .developer-tag { font-size: 11px; color: #888; margin-top: 10px; border-top: 1px dashed #ccc; padding-top: 8px; font-style: italic; }
     </style>
 </head>
 <body>
 
 <div class="no-print">
     <div class="card">
-        <h2>🚀 SALSABILAH AMIN EMPIRES | ERP ENGINE</h2>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <h2><i class="fas fa-box-open"></i> SAE MASTER ERP - SOHAG EDITION</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px;">
             <div>
-                <h3>কাস্টমার সিলেকশন (৩৫০+)</h3>
-                <input type="text" id="custSearch" placeholder="নাম লিখে খুঁজুন..." onkeyup="filterCust()">
-                <select id="custSelect" size="5">
+                <h3><i class="fas fa-users"></i> কাস্টমার ডাটাবেস</h3>
+                <input type="text" id="custSearch" placeholder="নাম বা ফোন লিখে খুঁজুন..." onkeyup="filterCustomers()">
+                <select id="custSelect" size="8">
                     <option value="HASMOT ULLAH" data-phone="01711078208" data-addr="Asmankhali, Alamdanga" data-due="264649">HASMOT ULLAH (৳২,৬৪,৬৪৯)</option>
                     <option value="MD. ANES UDDIN" data-phone="01956137838" data-addr="Hatboalia, Chuadanga" data-due="40702">MD. ANES UDDIN (৳৪০,৭০২)</option>
-                    <option value="ASMA KHATUN" data-phone="01944074823" data-addr="Bhangbaria" data-due="0">ASMA KHATUN (Paid)</option>
-                    </select>
+                    <option value="ASMA KHATUN" data-phone="01944074823" data-addr="Bhangbaria, Chuadanga" data-due="0">ASMA KHATUN (Paid)</option>
+                    <option value="SHAJIBUL HAQUE" data-phone="01711732515" data-addr="Alamdanga" data-due="0">MD. SHAJIBUL HAQUE</option>
+                </select>
             </div>
             <div>
-                <h3>প্রোডাক্ট ও ব্র্যান্ড</h3>
-                <select id="brandSelect">
-                    <option value="minister">Minister Plaza (Red Theme)</option>
-                    <option value="butterfly">House of Butterfly (Blue Theme)</option>
+                <h3><i class="fas fa-file-invoice-dollar"></i> ইনভয়েস কন্ট্রোল</h3>
+                <label>ইনভয়েস থিম সিলেক্ট করুন:</label>
+                <select id="themeSelect">
+                    <option value="minister">Minister Plaza (Red/Black)</option>
+                    <option value="butterfly">House of Butterfly (Royal Blue)</option>
                 </select>
-                <select id="prodSelect">
-                    <option value="Minister 1 TON AC" data-price="54828">Minister 1 TON AC (Stock: 1)</option>
-                    <option value="Minister Refrigerator" data-price="35000">Minister Refrigerator (Stock: 12)</option>
-                    <option value="Butterfly LG TV" data-price="47702">LG 43" Smart TV (Butterfly)</option>
+                <label>প্রোডাক্ট সিলেক্ট করুন:</label>
+                <select id="productSelect">
+                    <option value="Minister 1 TON AC (12K410P-WHT)" data-price="54828">Minister 1 TON AC - ৳৫৪,৮২৮</option>
+                    <option value="Minister Fridge (12.00 Pis Stock)" data-price="35000">Minister Refrigerator - ৳৩৫,০০০</option>
+                    <option value="LG 43 Inch Smart TV" data-price="47702">LG 43" Smart TV - ৳৪৭,৭০২</option>
                 </select>
-                <div class="btn-group">
-                    <button class="btn" style="background:var(--gold); color:#000;" onclick="generateInvoice()">ইনভয়েস জেনারেট ও প্রিন্ট</button>
-                </div>
+                <button class="btn" style="background:var(--gold); color:#000;" onclick="makeInvoice()">ইনভয়েস জেনারেট ও প্রিন্ট করুন</button>
             </div>
         </div>
     </div>
@@ -76,81 +77,93 @@
 <div id="invoice" class="invoice-container">
     <div class="inv-header">
         <div>
-            <h1 id="invBrand" class="brand-title">BRAND NAME</h1>
-            <p id="invShowroom" style="margin:5px 0; font-weight:bold;">SR Electronics Park</p>
+            <h1 id="invBrand" class="brand-name">BRAND NAME</h1>
+            <p id="invShowroom" style="margin:5px 0; font-weight:bold; color:#555;">SR Electronics Park</p>
         </div>
-        <div class="company-details">
+        <div class="company-meta">
             <strong style="font-size: 16px;">SALSABILAH AMIN EMPIRES LTD.</strong><br>
             Shah Super Market, Hatboalia, Alamdanga, Chuadanga<br>
             📞 01711995940, 01719732134
         </div>
     </div>
 
-    <div style="display:flex; justify-content:space-between; margin-bottom:30px;">
-        <div>
-            <p style="color:#777; margin-bottom:5px;">BILL TO:</p>
-            <h4 id="dispName" style="margin:0; font-size:18px;">Customer Name</h4>
-            <p id="dispAddr" style="margin:2px 0;">Address</p>
-            <p id="dispPhone" style="margin:2px 0;">017XXXXXXXX</p>
+    <div style="display:flex; justify-content:space-between; margin-bottom:40px;">
+        <div id="customerInfo">
+            <p style="color:#888; text-transform:uppercase; font-size:12px; margin-bottom:5px;">Billing To:</p>
+            <h3 id="billName" style="margin:0; font-size:20px;">Customer Name</h3>
+            <p id="billAddr" style="margin:3px 0;">Address Line</p>
+            <p id="billPhone" style="margin:3px 0; font-weight:bold;">017XXXXXXXX</p>
         </div>
         <div style="text-align:right;">
-            <p><strong>Invoice:</strong> #SAE-2026-001</p>
-            <p><strong>Date:</strong> 05/02/2026</p>
+            <p><strong>Invoice ID:</strong> #SAE-2026-0644</p>
+            <p><strong>Issue Date:</strong> 05/02/2026</p>
         </div>
     </div>
 
     <table>
         <thead>
-            <tr><th>Product Description</th><th style="text-align:center;">Qty</th><th style="text-align:right;">Amount</th></tr>
+            <tr>
+                <th style="width:60%;">Description</th>
+                <th style="text-align:center;">Qty</th>
+                <th style="text-align:right;">Total (৳)</th>
+            </tr>
         </thead>
-        <tbody id="invItems"></tbody>
+        <tbody id="billItems"></tbody>
     </table>
 
-    <div style="margin-top:40px; text-align:right; border-top:2px solid #eee; padding-top:10px;">
-        <p>Sub Total: <span id="sTotal">0.00</span></p>
-        <h2 style="color:#000; margin:0;">Grand Total: <span id="gTotal">৳ 0.00</span></h2>
-        <p style="color:red; font-weight:bold;">Total Due: <span id="dTotal">৳ 0.00</span></p>
+    <div style="margin-top:50px; text-align:right; border-top:2px solid #333; padding-top:15px;">
+        <p style="font-size:16px;">Sub Total: <span id="sbt">0.00</span></p>
+        <h2 style="color:#000; margin:0; font-size:24px;">Grand Total: <span id="gdt">৳ 0.00</span></h2>
+        <p style="color:red; font-weight:bold;">Current Due: <span id="dueT">৳ 0.00</span></p>
     </div>
 
     <div class="inv-footer">
-        <div style="font-weight:bold; font-size:16px;">A product of SALSABILAH AMIN EMPIRES</div>
-        <div class="dev-credit">Developed by MD. AL AMIN SOHAG</div>
+        <div style="font-weight:bold; font-size:18px; letter-spacing:1px;">A product of SALSABILAH AMIN EMPIRES</div>
+        <div class="developer-tag">Developed by MD. AL AMIN SOHAG | SAE CORE ENGINE v5.0</div>
     </div>
 </div>
 
 <script>
-    function filterCust() {
+    function filterCustomers() {
         let val = document.getElementById('custSearch').value.toUpperCase();
         let opts = document.getElementById('custSelect').options;
-        for(let opt of opts) { opt.style.display = opt.text.toUpperCase().includes(val) ? "" : "none"; }
+        for(let opt of opts) {
+            opt.style.display = opt.text.toUpperCase().includes(val) ? "" : "none";
+        }
     }
 
-    function generateInvoice() {
+    function makeInvoice() {
         const cSel = document.getElementById('custSelect');
         const cOpt = cSel.options[cSel.selectedIndex];
-        const bType = document.getElementById('brandSelect').value;
-        const pSel = document.getElementById('prodSelect');
+        const theme = document.getElementById('themeSelect').value;
+        const pSel = document.getElementById('productSelect');
         const pOpt = pSel.options[pSel.selectedIndex];
 
-        if(!cOpt.value) { alert("কাস্টমার সিলেক্ট করুন"); return; }
+        if(!cOpt || !cOpt.value) { alert("দয়া করে একজন কাস্টমার সিলেক্ট করুন!"); return; }
 
-        // থিম সেট করা
+        // থিম আপডেট
         const brandH = document.getElementById('invBrand');
-        if(bType === 'minister') {
+        if(theme === 'minister') {
             brandH.innerText = "MINISTER PLAZA"; brandH.style.color = "#ed1c24";
         } else {
             brandH.innerText = "HOUSE OF BUTTERFLY"; brandH.style.color = "#004b91";
         }
 
-        // ডাটা সেট করা
-        document.getElementById('dispName').innerText = cOpt.value;
-        document.getElementById('dispPhone').innerText = cOpt.dataset.phone;
-        document.getElementById('dispAddr').innerText = cOpt.dataset.addr;
-        document.getElementById('dTotal').innerText = "৳ " + cOpt.dataset.due;
+        // ডাটা আপডেট
+        document.getElementById('billName').innerText = cOpt.value;
+        document.getElementById('billPhone').innerText = cOpt.dataset.phone;
+        document.getElementById('billAddr').innerText = cOpt.dataset.addr;
+        document.getElementById('dueT').innerText = "৳ " + cOpt.dataset.due;
 
-        document.getElementById('invItems').innerHTML = `<tr><td>${pOpt.value}</td><td style="text-align:center;">1</td><td style="text-align:right;">${pOpt.dataset.price}</td></tr>`;
-        document.getElementById('sTotal').innerText = "৳ " + pOpt.dataset.price;
-        document.getElementById('gTotal').innerText = "৳ " + pOpt.dataset.price;
+        document.getElementById('billItems').innerHTML = `
+            <tr>
+                <td>${pOpt.value}</td>
+                <td style="text-align:center;">01</td>
+                <td style="text-align:right;">${pOpt.dataset.price}.00</td>
+            </tr>`;
+        
+        document.getElementById('sbt').innerText = pOpt.dataset.price + ".00";
+        document.getElementById('gdt').innerText = "৳ " + pOpt.dataset.price;
 
         window.print();
     }
