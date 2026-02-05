@@ -1,20 +1,22 @@
 {
+  "short_name": "Salsabilah",
   "name": "Salsabilah Amin Empires",
-  "short_name": "SA Empires",
-  "start_url": "/index.html",
-  "display": "standalone",
-  "background_color": "#000810",
-  "theme_color": "#D4AF37",
+  "description": "Industrial Intelligence & Strategic Digital Ecosystem",
   "icons": [
     {
-      "src": "pavicon.png",
+      "src": "pavicon.png.jpg",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/jpeg"
     },
     {
-      "src": "pavicon.png",
+      "src": "pavicon.png.jpg",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/jpeg"
     }
-  ]
+  ],
+  "start_url": "/index.html",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "orientation": "any"
 }
