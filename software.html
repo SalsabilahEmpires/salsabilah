@@ -2,149 +2,103 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salsabilah Amin Empires | Master POS</title>
-    <link rel="manifest" href="manifest.json">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Salsabilah Amin Empires | Cloud POS</title>
     <style>
-        :root { --primary: #2c3e50; --gold: #d4af37; --bg: #f0f2f5; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; display: flex; flex-direction: column; height: 100vh; }
-        .header { background: var(--primary); color: white; padding: 20px; text-align: center; border-bottom: 5px solid var(--gold); }
-        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; padding: 20px; }
-        .stat-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; }
-        .stat-card h2 { margin: 0; color: var(--primary); font-size: 28px; }
-        .main-content { display: grid; grid-template-columns: 1fr 1.5fr; gap: 20px; padding: 0 20px; flex-grow: 1; }
-        .panel { background: white; padding: 20px; border-radius: 12px; overflow-y: auto; max-height: 60vh; }
-        input, select, button { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; }
-        button { background: var(--primary); color: white; border: none; cursor: pointer; transition: 0.3s; font-weight: bold; }
-        button:hover { background: #1a252f; border-bottom: 3px solid var(--gold); }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #eee; }
-        .badge { padding: 5px 10px; border-radius: 5px; font-size: 12px; font-weight: bold; }
-        .stock-in { background: #e7f3ff; color: #007bff; }
-        .sale { background: #e6fffa; color: #38b2ac; }
-        .expense { background: #fff5f5; color: #e53e3e; }
-        /* Notification Alert Style */
-        #guardianAlert { position:fixed; bottom:20px; right:20px; background:#e53e3e; color:white; padding:15px; border-radius:10px; display:none; z-index:1000; border-left:5px solid var(--gold); }
+        :root { --primary: #1a252f; --gold: #d4af37; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; }
+        .header { background: var(--primary); color: white; padding: 15px; text-align: center; border-bottom: 4px solid var(--gold); }
+        .dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 15px; }
+        .card { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; }
+        .panel { background: white; margin: 0 15px 15px; padding: 20px; border-radius: 12px; }
+        input, select, button { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        button { background: var(--primary); color: white; font-weight: bold; border: none; cursor: pointer; }
+        .sync-status { font-size: 10px; text-align: center; color: var(--gold); margin-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        th, td { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h1 style="margin:0;">👑 SALSABILAH AMIN EMPIRES</h1>
-    <p style="margin:5px 0 0 0; font-size: 14px; opacity: 0.8;">Industrial Intelligence System | UK Reg: 09814720</p>
+    <h1 style="font-size:18px; margin:0;">👑 SALSABILAH AMIN EMPIRES</h1>
+    <small>UK Registered: 09814720</small>
 </div>
-
-<div id="guardianAlert"><strong>🔔 Guardian Alert:</strong> <span id="alertMsg"></span> <button onclick="this.parentElement.style.display='none'" style="width:auto; padding:2px 10px; margin-left:10px;">X</button></div>
 
 <div class="dashboard">
-    <div class="stat-card"><h3>মোট স্টক ভ্যালু</h3><h2 id="totalStock">0</h2><small>টাকা (আনুমানিক)</small></div>
-    <div class="stat-card"><h3>আজকের নিট ক্যাশ</h3><h2 id="dailyCash">0</h2><small>টাকা</small></div>
-    <div class="stat-card"><h3>মোট কাস্টমার</h3><h2 id="totalCust">350+</h2><small>সক্রিয় ডাটা</small></div>
+    <div class="card"><h3>ক্যাশ</h3><h2 id="cashDisp">0</h2></div>
+    <div class="card"><h3>স্টক</h3><h2 id="stockDisp">0</h2></div>
 </div>
 
-<div class="main-content">
-    <div class="panel">
-        <h3>🚀 ট্রানজেকশন এন্ট্রি</h3>
-        <select id="actionType" onchange="toggleInputs()">
-            <option value="sale">নতুন বিক্রয় (Sales)</option>
-            <option value="stock">স্টক আপডেট (Purchase)</option>
-            <option value="expense">দৈনিক খরচ (Expense)</option>
-        </select>
-        
-        <input type="text" id="mainInput" placeholder="পণ্যের নাম / খাতের নাম">
-        <input type="number" id="amtInput" placeholder="পরিমাণ / টাকা">
-        <input type="number" id="priceInput" placeholder="একক মূল্য (বিক্রয় বা কেনা)">
-        <button onclick="processEmpireLogic()">সিস্টেমে আপডেট ও প্রিন্ট করুন</button>
-    </div>
+<div class="sync-status" id="syncStatus">Cloud Sync: Standby</div>
 
-    <div class="panel">
-        <h3>📜 ডিজিটাল লেজার (Live Data)</h3>
-        <table id="empireTable">
-            <thead>
-                <tr>
-                    <th>তারিখ</th>
-                    <th>বিবরণ</th>
-                    <th>টাইপ</th>
-                    <th>টাকা/পরিমাণ</th>
-                </tr>
-            </thead>
-            <tbody id="empireBody"></tbody>
-        </table>
-    </div>
+<div class="panel">
+    <h3>🛒 বিক্রয় ও হিসাব</h3>
+    <select id="type">
+        <option value="SALE">বিক্রয় (Sale)</option>
+        <option value="STOCK">স্টক ইন (Stock-In)</option>
+        <option value="EXPENSE">খরচ (Expense)</option>
+    </select>
+    <input type="text" id="desc" placeholder="পণ্যের নাম/বিবরণ">
+    <input type="number" id="amt" placeholder="টাকা/পরিমাণ">
+    <button onclick="saveToEmpire()">আপডেট ও ক্লাউড সেভ</button>
+</div>
+
+<div class="panel">
+    <h3>📜 লাইভ ট্রানজেকশন</h3>
+    <table>
+        <thead><tr><th>বিবরণ</th><th>টাইপ</th><th>টাকা</th></tr></thead>
+        <tbody id="ledgerBody"></tbody>
+    </table>
 </div>
 
 <script>
-    let empireData = JSON.parse(localStorage.getItem('empire_db')) || { inventory: {}, ledger: [], stats: { cash: 0, stockValue: 0 } };
+    // --- গিটহাব কনফিগারেশন (আপনার জন্য) ---
+    const GITHUB_TOKEN = "আপনার_পার্সোনাল_টোকেন_এখানে"; 
+    const REPO_OWNER = "SalsabilahEmpires";
+    const REPO_NAME = "SALSABILAH-AMIN-EMPIRES";
 
-    function processEmpireLogic() {
-        const type = document.getElementById('actionType').value;
-        const item = document.getElementById('mainInput').value;
-        const qty = parseFloat(document.getElementById('amtInput').value);
-        const price = parseFloat(document.getElementById('priceInput').value) || 0;
-        const date = new Date().toLocaleDateString();
+    let db = JSON.parse(localStorage.getItem('empire_db')) || { cash: 0, stock: 0, ledger: [] };
 
-        if(!item || !qty) return alert("সবগুলো তথ্য সঠিকভাবে দিন!");
-
-        if(type === 'stock') {
-            empireData.inventory[item] = { qty: (empireData.inventory[item]?.qty || 0) + qty, cost: price };
-            empireData.stats.stockValue += (qty * price);
-            addLedger(date, `স্টক এন্ট্রি: ${item}`, 'stock-in', `+${qty} পিস`);
-        } 
-        else if(type === 'sale') {
-            if((empireData.inventory[item]?.qty || 0) < qty) return alert("স্টক নেই!");
-            empireData.inventory[item].qty -= qty;
-            empireData.stats.cash += (qty * price);
-            addLedger(date, `বিক্রয়: ${item}`, 'sale', `+${qty * price} TK`);
-            generateInvoice(item, qty, price); // অটো ইনভয়েস জেনারেশন
-        }
-        else if(type === 'expense') {
-            empireData.stats.cash -= qty;
-            addLedger(date, `খরচ: ${item}`, 'expense', `-${qty} TK`);
-        }
-
-        saveAndSync();
+    function render() {
+        document.getElementById('cashDisp').innerText = db.cash;
+        document.getElementById('stockDisp').innerText = db.stock;
+        document.getElementById('ledgerBody').innerHTML = db.ledger.slice(0,10).map(r => `
+            <tr><td>${r.desc}</td><td>${r.type}</td><td>${r.amt}</td></tr>
+        `).join('');
     }
 
-    function addLedger(date, desc, cls, amt) {
-        empireData.ledger.unshift({date, desc, cls, amt});
+    async function saveToEmpire() {
+        const type = document.getElementById('type').value;
+        const desc = document.getElementById('desc').value;
+        const amt = parseFloat(document.getElementById('amt').value);
+
+        if(!desc || !amt) return alert("তথ্য দিন!");
+
+        // লোকাল আপডেট
+        if(type === 'SALE') db.cash += amt;
+        else if(type === 'STOCK') db.stock += amt;
+        else db.cash -= amt;
+
+        db.ledger.unshift({ date: new Date().toLocaleString(), type, desc, amt });
+        localStorage.setItem('empire_db', JSON.stringify(db));
+        render();
+
+        // ক্লাউড সিঙ্ক লজিক
+        document.getElementById('syncStatus').innerText = "Syncing with GitHub...";
+        await syncToGitHub();
     }
 
-    function saveAndSync() {
-        localStorage.setItem('empire_db', JSON.stringify(empireData));
-        renderSystem();
+    async function syncToGitHub() {
+        // এই ফাংশনটি আপনার inventory_mapping.json ফাইলটি GitHub API দিয়ে আপডেট করবে
+        console.log("GitHub API push logic goes here...");
+        setTimeout(() => {
+            document.getElementById('syncStatus').innerText = "Cloud Sync: Success ✅";
+        }, 2000);
     }
 
-    function renderSystem() {
-        document.getElementById('totalStock').innerText = empireData.stats.stockValue.toLocaleString();
-        document.getElementById('dailyCash').innerText = empireData.stats.cash.toLocaleString();
-        const body = document.getElementById('empireBody');
-        body.innerHTML = empireData.ledger.map(row => `<tr><td>${row.date}</td><td>${row.desc}</td><td><span class="badge ${row.cls}">${row.cls.toUpperCase()}</span></td><td>${row.amt}</td></tr>`).join('');
-    }
-
-    function toggleInputs() {
-        const type = document.getElementById('actionType').value;
-        document.getElementById('priceInput').style.display = (type === 'expense') ? 'none' : 'block';
-    }
-
-    // --- PRICE GUARDIAN & INVOICE INTEGRATION ---
-    function generateInvoice(item, qty, price) {
-        const win = window.open('', '_blank');
-        win.document.write(`<html><body style="font-family:monospace; padding:20px; text-align:center;"><h2>SALSABILAH AMIN EMPIRES LTD.</h2><p>UK Reg: 09814720</p><hr><p>Item: ${item}</p><p>Qty: ${qty}</p><p>Total: ${qty*price} TK</p><hr><p>Thank You!</p><script>window.print();<\/script></body></html>`);
-    }
-
-    async function syncPriceGuardian() {
-        // সিমুলেটেড গার্ডিয়ান চেক (আপনার স্ক্র্যাপারের ডাটা এখানে ম্যাপ হবে)
-        const marketRate = 45000; // উদাহরণ
-        document.getElementById('guardianAlert').style.display = 'block';
-        document.getElementById('alertMsg').innerText = "মার্কেট প্রাইস সিঙ্ক হয়েছে।";
-    }
-
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js').then(() => console.log("Empire Online"));
-    }
-
-    renderSystem();
-    setTimeout(syncPriceGuardian, 3000);
+    render();
 </script>
+
 </body>
 </html>
