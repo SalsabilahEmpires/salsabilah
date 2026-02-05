@@ -1,98 +1,24 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Salsabilah Empire</title>
+    <title>SAE ADMIN | Operations Control</title>
     <style>
-        :root { --primary: #1a252f; --gold: #d4af37; --danger: #c0392b; }
-        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; }
-        .nav { background: var(--primary); color: white; padding: 15px; text-align: center; border-bottom: 4px solid var(--gold); }
-        .container { max-width: 900px; margin: 20px auto; padding: 15px; }
-        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        h2 { color: var(--primary); border-left: 5px solid var(--gold); padding-left: 10px; font-size: 20px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        button { width: 100%; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-        .btn-sync { background: var(--primary); color: white; }
-        .btn-reset { background: var(--danger); color: white; }
-        pre { background: #272822; color: #f8f8f2; padding: 15px; border-radius: 10px; font-size: 12px; overflow-x: auto; max-height: 200px; }
-        .stat { font-size: 14px; background: #eee; padding: 10px; border-radius: 5px; margin-bottom: 10px; }
+        body { background: #000810; color: #fff; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; }
+       .login-box { background: #001220; padding: 40px; border-radius: 15px; border: 1px solid #D4AF37; text-align: center; }
+        button { background: #D4AF37; color: #000; padding: 12px 25px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
-
-<div class="nav">
-    <strong>SALSABILAH AMIN EMPIRES</strong> | Admin Command Center
-</div>
-
-<div class="container">
-    <div class="grid">
-        <div class="card">
-            <h2>⚙️ সিস্টেম কন্ট্রোল</h2>
-            <div class="stat">সিস্টেম স্ট্যাটাস: <span style="color:green">সচল (Online)</span></div>
-            <div class="stat">ডাটাবেস সাইজ: <span id="dbSize">0</span> KB</div>
-            <button class="btn-sync" onclick="exportBackup()">ডাউনলোড ব্যাকআপ (JSON)</button>
-            <button class="btn-sync" onclick="location.href='software.html'" style="background:#27ae60">POS সফটওয়্যারে যান</button>
-        </div>
-
-        <div class="card">
-            <h2>🛡️ সিকিউরিটি ও ডাটা</h2>
-            <p style="font-size:12px; color:gray;">সতর্কতা: রিসেট করলে সব হিসাব চিরতরে মুছে যাবে।</p>
-            <button class="btn-reset" onclick="resetSystem()">সম্পূর্ণ ডাটা রিসেট করুন</button>
-            <button class="btn-sync" onclick="updateGitHubToken()" style="background:#2980b9">গিটহাব টোকেন আপডেট</button>
-        </div>
+    <div class="login-box">
+        <h2 style="color:#D4AF37;">SAE INTELLIGENCE PROTOCOL</h2>
+        <input type="password" id="pass" placeholder="Strategic Key" style="display:block; width:100%; padding:10px; margin:20px 0;">
+        <button onclick="login()">Initialize Core Engine</button>
     </div>
-
-    <div class="card">
-        <h2>🔍 ডাটাবেস ইন্সপেক্টর (Raw Data)</h2>
-        <pre id="dataViewer">Loading Data...</pre>
-    </div>
-</div>
-
-<script>
-    // ডাটা লোড করা
-    function initAdmin() {
-        const data = localStorage.getItem('empire_db');
-        if(data) {
-            document.getElementById('dataViewer').innerText = JSON.stringify(JSON.parse(data), null, 4);
-            document.getElementById('dbSize').innerText = (data.length / 1024).toFixed(2);
-        } else {
-            document.getElementById('dataViewer').innerText = "কোন ডাটা পাওয়া যায়নি।";
+    <script>
+        function login() {
+            if(document.getElementById('pass').value === 'SAE2026') { window.location.href = 'software.html'; }
+            else { alert('Access Denied'); }
         }
-    }
-
-    // ব্যাকআপ ফাইল ডাউনলোড
-    function exportBackup() {
-        const data = localStorage.getItem('empire_db');
-        if(!data) return alert("কোন ডাটা নেই!");
-        const blob = new Blob([data], {type: 'application/json'});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `Salsabilah_Backup_${new Date().toISOString().slice(0,10)}.json`;
-        a.click();
-    }
-
-    // সম্পূর্ণ রিসেট
-    function resetSystem() {
-        if(confirm("আপনি কি নিশ্চিতভাবে সব ডাটা মুছে ফেলতে চান? এটি আর ফিরে পাওয়া যাবে না!")) {
-            localStorage.removeItem('empire_db');
-            alert("সিস্টেম রিসেট সফল হয়েছে।");
-            location.reload();
-        }
-    }
-
-    // টোকেন সেটিং (ভবিষ্যতের জন্য)
-    function updateGitHubToken() {
-        const token = prompt("আপনার GitHub Personal Access Token দিন:");
-        if(token) {
-            localStorage.setItem('gh_token', token);
-            alert("টোকেন সেভ হয়েছে। এখন আপনার ক্লাউড সিঙ্ক কাজ করবে।");
-        }
-    }
-
-    initAdmin();
-</script>
-
+    </script>
 </body>
 </html>
