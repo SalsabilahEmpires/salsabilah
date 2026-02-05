@@ -3,95 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Control - Salsabilah Empire</title>
+    <title>Admin - Salsabilah Empire</title>
     <style>
-        :root { --primary: #1a252f; --gold: #d4af37; --danger: #c0392b; --success: #27ae60; }
-        body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; margin: 0; color: #333; }
-        .nav { background: var(--primary); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--gold); }
-        .container { max-width: 1000px; margin: 30px auto; padding: 20px; }
-        .admin-card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        h2 { border-left: 5px solid var(--gold); padding-left: 10px; color: var(--primary); }
-        button { cursor: pointer; padding: 12px 20px; border: none; border-radius: 8px; font-weight: bold; transition: 0.3s; width: 100%; margin-top: 10px; }
-        .btn-backup { background: var(--primary); color: white; }
+        :root { --primary: #1a252f; --gold: #d4af37; --danger: #c0392b; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; }
+        .nav { background: var(--primary); color: white; padding: 15px; text-align: center; border-bottom: 4px solid var(--gold); }
+        .container { max-width: 900px; margin: 20px auto; padding: 15px; }
+        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        h2 { color: var(--primary); border-left: 5px solid var(--gold); padding-left: 10px; font-size: 20px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        button { width: 100%; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .btn-sync { background: var(--primary); color: white; }
         .btn-reset { background: var(--danger); color: white; }
-        .btn-sync { background: var(--success); color: white; }
-        .stats-box { background: #f9f9f9; padding: 15px; border-radius: 10px; border: 1px solid #ddd; }
-        pre { background: #272822; color: #f8f8f2; padding: 15px; border-radius: 10px; overflow-x: auto; font-size: 12px; }
+        pre { background: #272822; color: #f8f8f2; padding: 15px; border-radius: 10px; font-size: 12px; overflow-x: auto; max-height: 200px; }
+        .stat { font-size: 14px; background: #eee; padding: 10px; border-radius: 5px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
 <div class="nav">
-    <div><strong>SALSABILAH AMIN EMPIRES</strong> | Admin Panel</div>
-    <div>Reg No: 09814720 (UK)</div>
+    <strong>SALSABILAH AMIN EMPIRES</strong> | Admin Command Center
 </div>
 
 <div class="container">
     <div class="grid">
-        <div class="admin-card">
-            <h2>💾 ডাটা ম্যানেজমেন্ট</h2>
-            <p>আপনার ব্যবসার সকল ডাটা (Inventory & Ledger) ব্যাকআপ নিন।</p>
-            <button class="btn-backup" onclick="exportData()">Download Backup (JSON)</button>
-            <hr>
-            <p style="color: var(--danger); font-size: 13px;">সাবধান: রিসেট করলে সব হিসাব মুছে যাবে!</p>
-            <button class="btn-reset" onclick="resetSystem()">Factory Reset System</button>
+        <div class="card">
+            <h2>⚙️ সিস্টেম কন্ট্রোল</h2>
+            <div class="stat">সিস্টেম স্ট্যাটাস: <span style="color:green">সচল (Online)</span></div>
+            <div class="stat">ডাটাবেস সাইজ: <span id="dbSize">0</span> KB</div>
+            <button class="btn-sync" onclick="exportBackup()">ডাউনলোড ব্যাকআপ (JSON)</button>
+            <button class="btn-sync" onclick="location.href='software.html'" style="background:#27ae60">POS সফটওয়্যারে যান</button>
         </div>
 
-        <div class="admin-card">
-            <h2>⚙️ সিস্টেম ইন্টেলিজেন্স</h2>
-            <div class="stats-box">
-                <p><strong>PWA Status:</strong> <span style="color:var(--success)">Online & Cached</span></p>
-                <p><strong>Database Size:</strong> <span id="dbSize">0</span> KB</p>
-                <p><strong>Price Guardian:</strong> Active</p>
-            </div>
-            <button class="btn-sync" onclick="location.href='software.html'">Go to POS System</button>
+        <div class="card">
+            <h2>🛡️ সিকিউরিটি ও ডাটা</h2>
+            <p style="font-size:12px; color:gray;">সতর্কতা: রিসেট করলে সব হিসাব চিরতরে মুছে যাবে।</p>
+            <button class="btn-reset" onclick="resetSystem()">সম্পূর্ণ ডাটা রিসেট করুন</button>
+            <button class="btn-sync" onclick="updateGitHubToken()" style="background:#2980b9">গিটহাব টোকেন আপডেট</button>
         </div>
     </div>
 
-    <div class="admin-card">
-        <h2>🔍 Raw Data Inspection (JSON)</h2>
-        <p>সিস্টেমের ভেতরের মূল ডাটাবেস স্ট্রাকচার:</p>
-        <pre id="jsonViewer">Loading data...</pre>
+    <div class="card">
+        <h2>🔍 ডাটাবেস ইন্সপেক্টর (Raw Data)</h2>
+        <pre id="dataViewer">Loading Data...</pre>
     </div>
 </div>
 
 <script>
     // ডাটা লোড করা
-    function loadAdminData() {
+    function initAdmin() {
         const data = localStorage.getItem('empire_db');
-        if (data) {
-            document.getElementById('jsonViewer').innerText = JSON.stringify(JSON.parse(data), null, 4);
+        if(data) {
+            document.getElementById('dataViewer').innerText = JSON.stringify(JSON.parse(data), null, 4);
             document.getElementById('dbSize').innerText = (data.length / 1024).toFixed(2);
         } else {
-            document.getElementById('jsonViewer').innerText = "কোন ডাটা পাওয়া যায়নি।";
+            document.getElementById('dataViewer').innerText = "কোন ডাটা পাওয়া যায়নি।";
         }
     }
 
-    // ব্যাকআপ এক্সপোর্ট
-    function exportData() {
+    // ব্যাকআপ ফাইল ডাউনলোড
+    function exportBackup() {
         const data = localStorage.getItem('empire_db');
-        if(!data) return alert("ব্যাকআপ নেওয়ার মতো কোনো ডাটা নেই!");
-        
-        const blob = new Blob([data], { type: 'application/json' });
+        if(!data) return alert("কোন ডাটা নেই!");
+        const blob = new Blob([data], {type: 'application/json'});
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `Salsabilah_Backup_${new Date().toLocaleDateString()}.json`;
+        a.download = `Salsabilah_Backup_${new Date().toISOString().slice(0,10)}.json`;
         a.click();
     }
 
-    // সিস্টেম রিসেট
+    // সম্পূর্ণ রিসেট
     function resetSystem() {
-        if (confirm("আপনি কি নিশ্চিত? আপনার সকল বিক্রয় এবং স্টকের হিসাব পাকাপাকিভাবে মুছে যাবে!")) {
+        if(confirm("আপনি কি নিশ্চিতভাবে সব ডাটা মুছে ফেলতে চান? এটি আর ফিরে পাওয়া যাবে না!")) {
             localStorage.removeItem('empire_db');
             alert("সিস্টেম রিসেট সফল হয়েছে।");
             location.reload();
         }
     }
 
-    // শুরুতে রান হবে
-    loadAdminData();
+    // টোকেন সেটিং (ভবিষ্যতের জন্য)
+    function updateGitHubToken() {
+        const token = prompt("আপনার GitHub Personal Access Token দিন:");
+        if(token) {
+            localStorage.setItem('gh_token', token);
+            alert("টোকেন সেভ হয়েছে। এখন আপনার ক্লাউড সিঙ্ক কাজ করবে।");
+        }
+    }
+
+    initAdmin();
 </script>
 
 </body>
